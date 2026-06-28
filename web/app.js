@@ -1,8 +1,4 @@
 const canvas = document.getElementById('canvas');
-const kRedWeight = 0.299;
-const kGreenWeight = 0.587;
-const kBlueWeight = 0.114;
-
 const context = canvas.getContext('2d');
 context.lineCap = 'round';
 
@@ -117,6 +113,9 @@ document.getElementById('saturation').addEventListener('input', (event) => {
 });
 
 document.getElementById('grayscale').addEventListener('click', () => {
+  const kRedWeight = 0.299;
+  const kGreenWeight = 0.587;
+  const kBlueWeight = 0.114;
   const image = context.getImageData(0, 0, canvas.width, canvas.height);
   const { data } = image;
   for (let i = 0; i < data.length; i += 4) {

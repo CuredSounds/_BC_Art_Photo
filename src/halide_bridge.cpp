@@ -13,6 +13,8 @@ void applyBrightnessWithHalideFallback(Image& image, int delta) {
     }
 
 #if __has_include(<Halide.h>)
+    // Halide buffers are indexed as (channel, x, y), so the dimensions map to
+    // (channels, width, height) even though Image stores width/height/channels.
     Halide::Buffer<std::uint8_t> input(image.pixels.data(), image.channels, image.width, image.height);
     Halide::Buffer<std::uint8_t> output(image.channels, image.width, image.height);
 
