@@ -26,4 +26,4 @@ ctest --test-dir build --output-on-failure
 
 ## Run web UI
 
-Open `/home/runner/work/_BC_Art_Photo/_BC_Art_Photo/web/index.html` in a browser.
+Open `web/index.html` in a browser.
