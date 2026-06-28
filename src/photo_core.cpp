@@ -6,6 +6,10 @@
 namespace bc_art_photo {
 namespace {
 
+constexpr float kRedWeight = 0.299F;
+constexpr float kGreenWeight = 0.587F;
+constexpr float kBlueWeight = 0.114F;
+
 std::uint8_t clampToByte(int value) {
     return static_cast<std::uint8_t>(std::clamp(value, 0, 255));
 }
@@ -47,8 +51,8 @@ void applyGrayscale(Image& image) {
     }
 
     for (std::size_t i = 0; i < image.pixels.size(); i += image.channels) {
-        const int gray = static_cast<int>(0.299F * image.pixels[i] + 0.587F * image.pixels[i + 1] +
-                                          0.114F * image.pixels[i + 2]);
+        const int gray = static_cast<int>(kRedWeight * image.pixels[i] + kGreenWeight * image.pixels[i + 1] +
+                                          kBlueWeight * image.pixels[i + 2]);
         const auto grayByte = clampToByte(gray);
         image.pixels[i] = grayByte;
         image.pixels[i + 1] = grayByte;

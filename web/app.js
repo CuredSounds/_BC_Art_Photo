@@ -1,4 +1,8 @@
 const canvas = document.getElementById('canvas');
+const GRAYSCALE_RED_WEIGHT = 0.299;
+const GRAYSCALE_GREEN_WEIGHT = 0.587;
+const GRAYSCALE_BLUE_WEIGHT = 0.114;
+
 const context = canvas.getContext('2d');
 context.lineCap = 'round';
 
@@ -116,7 +120,7 @@ document.getElementById('grayscale').addEventListener('click', () => {
   const image = context.getImageData(0, 0, canvas.width, canvas.height);
   const { data } = image;
   for (let i = 0; i < data.length; i += 4) {
-    const gray = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
+    const gray = GRAYSCALE_RED_WEIGHT * data[i] + GRAYSCALE_GREEN_WEIGHT * data[i + 1] + GRAYSCALE_BLUE_WEIGHT * data[i + 2];
     data[i] = gray;
     data[i + 1] = gray;
     data[i + 2] = gray;
