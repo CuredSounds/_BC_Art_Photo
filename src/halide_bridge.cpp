@@ -2,6 +2,7 @@
 
 #if __has_include(<Halide.h>)
 #include <Halide.h>
+#include <cstring>
 #endif
 
 namespace bc_art_photo {
@@ -25,14 +26,8 @@ void applyBrightnessWithHalideFallback(Image& image, int delta) {
 
     brighten.realize(output);
 
-    for (int yPos = 0; yPos < image.height; ++yPos) {
-        for (int xPos = 0; xPos < image.width; ++xPos) {
-            for (int channel = 0; channel < image.channels; ++channel) {
-                image.pixels[static_cast<std::size_t>((yPos * image.width + xPos) * image.channels + channel)] =
-                    output(channel, xPos, yPos);
-            }
-        }
-    }
+    std::memcpy(image.pixels.data(), output.data(),
+                static_cast<std::size_t>(image.width * image.height * image.channels));
 #else
     applyBrightness(image, delta);
 #endif
